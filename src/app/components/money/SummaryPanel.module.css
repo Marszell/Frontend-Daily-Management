@@ -1,0 +1,84 @@
+.panel {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: #e5e7eb;
+}
+
+.btnActive {
+  background: #1d4ed8;
+  color: #fff;
+  border-color: #1d4ed8;
+}
+
+.btnActive:hover {
+  background: #1e40af;
+}
+
+.loading {
+  margin-top: 0.75rem;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.result {
+  margin-top: 1rem;
+  border-top: 1px solid #e2e2e2;
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.row span:first-child {
+  color: #555;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #e2e2e2;
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.totalLabel {
+  font-weight: 700;
+}
+
+.totalAmount {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #15803d;
+}

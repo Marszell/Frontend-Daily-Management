@@ -1,0 +1,150 @@
+.empty {
+  text-align: center;
+  padding: 3rem 0;
+  color: #888;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.column {
+  background: #f8f9fa;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.columnOver {
+  background: #eef2ff;
+  border-color: #1d4ed8;
+}
+
+.columnHeader {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerHIGH { background: #fee2e2; color: #dc2626; }
+.headerMEDIUM { background: #fef9c3; color: #a16207; }
+.headerLOW { background: #dcfce7; color: #15803d; }
+
+.count {
+  opacity: 0.7;
+}
+
+.columnEmpty {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.8rem;
+  padding: 1rem 0;
+}
+
+/* row-like cards using grid — looks like table but is divs */
+.card {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+  padding: 0.65rem 1rem;
+  cursor: grab;
+}
+
+.card:last-child {
+  border-bottom: none;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card:hover {
+  background: #fafafa;
+}
+
+.name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.statusPENDING { background: #e0e7ff; color: #4338ca; }
+.statusCOMPLETED { background: #dcfce7; color: #15803d; }
+.statusCANCELLED { background: #f3f4f6; color: #6b7280; }
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.btnDone {
+  background: none;
+  border: none;
+  color: #15803d;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btnDone:hover { text-decoration: underline; }
+
+.btnUndo {
+  background: none;
+  border: none;
+  color: #a16207;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btnUndo:hover { text-decoration: underline; }
+
+.btnEdit {
+  background: none;
+  border: none;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btnEdit:hover { text-decoration: underline; }
+
+.btnDelete {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btnDelete:hover { text-decoration: underline; }
