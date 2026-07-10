@@ -15,6 +15,7 @@ async function proxy(req: NextRequest, params: { path: string[] }) {
     method: req.method,
     headers,
     body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : undefined,
+    cache: 'no-store',
     // @ts-ignore
     duplex: 'half',
   })
