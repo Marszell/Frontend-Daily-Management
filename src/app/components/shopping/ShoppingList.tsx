@@ -10,6 +10,7 @@ interface Props {
   onDelete: (id: number) => void
   onMove: (id: number, urgency: Urgency) => void
   onToggleStatus: (id: number) => void
+  deletingIds?: Set<number>
 }
 
 const COLUMNS: { key: Urgency; label: string }[] = [
@@ -24,7 +25,7 @@ const STATUS_LABEL: Record<ShoppingItem['status'], string> = {
   CANCELLED: 'Dibatalkan',
 }
 
-export default function ShoppingList({ entries, onEdit, onDelete, onMove, onToggleStatus }: Props) {
+export default function ShoppingList({ entries, onEdit, onDelete, onMove, onToggleStatus, deletingIds }: Props) {
   const [dragOverCol, setDragOverCol] = useState<Urgency | null>(null)
 
   if (entries.length === 0) {
@@ -85,7 +86,13 @@ export default function ShoppingList({ entries, onEdit, onDelete, onMove, onTogg
                     </button>
                   )}
                   <button className={styles.btnEdit} onClick={() => onEdit(entry)}>Edit</button>
-                  <button className={styles.btnDelete} onClick={() => onDelete(entry.id)}>Hapus</button>
+                  <button
+                    className={styles.btnDelete}
+                    disabled={deletingIds?.has(entry.id)}
+                    onClick={() => onDelete(entry.id)}
+                  >
+                    {deletingIds?.has(entry.id) ? 'Menghapus...' : 'Hapus'}
+                  </button>
                 </div>
               </div>
             ))}

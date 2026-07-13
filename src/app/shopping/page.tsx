@@ -10,7 +10,9 @@ export default function ShoppingPage() {
   const [entries, setEntries] = useState<ShoppingItem[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<ShoppingItem | null>(null)
+  const [deleting, setDeleting] = useState<ShoppingItem | null>(null)
   const [loading, setLoading] = useState(true)
+  const [deletingIds, setDeletingIds] = useState<Set<number>>(new Set())
 
   const load = async () => {
     try {
@@ -42,11 +44,22 @@ export default function ShoppingPage() {
   }
 
   const handleDelete = async (id: number) => {
+    if (deletingIds.has(id)) return // already in flight, ignore repeat clicks
     if (!confirm('Hapus barang ini?')) return
+    setDeletingIds(prev => new Set(prev).add(id))
     try {
       await shoppingApi.delete(id)
-      load()
-    } catch (err) { alert((err as Error).message) }
+      setEntries(prev => prev.filter(en => en.id !== id))
+    } catch (err) {
+      alert((err as Error).message)
+      load() // resync in case of a real failure
+    } finally {
+      setDeletingIds(prev => {
+        const next = new Set(prev)
+        next.delete(id)
+        return next
+      })
+    }
   }
 
   const handleToggleStatus = async (id: number) => {
@@ -101,7 +114,7 @@ export default function ShoppingPage() {
 
       {loading
         ? <p className={styles.loading}>Memuat...</p>
-        : <ShoppingList entries={entries} onEdit={openEdit} onDelete={handleDelete} onMove={handleMove} onToggleStatus={handleToggleStatus} />
+        : <ShoppingList entries={entries} onEdit={openEdit} onDelete={handleDelete} onMove={handleMove} onToggleStatus={handleToggleStatus} deletingIds={deletingIds} />
       }
     </div>
   )

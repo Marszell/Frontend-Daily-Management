@@ -7,9 +7,10 @@ interface Props {
   entries: MoneyEntry[]
   onEdit: (entry: MoneyEntry) => void
   onDelete: (id: number) => void
+  deletingIds?: Set<number>
 }
 
-export default function MoneyList({ entries, onEdit, onDelete }: Props) {
+export default function MoneyList({ entries, onEdit, onDelete, deletingIds }: Props) {
   if (entries.length === 0) {
     return <p className={styles.empty}>Belum ada catatan keuangan.</p>
   }
@@ -30,8 +31,12 @@ export default function MoneyList({ entries, onEdit, onDelete }: Props) {
             <button className={styles.btnEdit} onClick={() => onEdit(entry)}>
               Edit
             </button>
-            <button className={styles.btnDelete} onClick={() => onDelete(entry.id)}>
-              Hapus
+            <button
+              className={styles.btnDelete}
+              disabled={deletingIds?.has(entry.id)}
+              onClick={() => onDelete(entry.id)}
+            >
+              {deletingIds?.has(entry.id) ? 'Menghapus...' : 'Hapus'}
             </button>
           </div>
         </div>

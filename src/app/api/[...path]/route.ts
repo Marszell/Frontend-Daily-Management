@@ -21,7 +21,10 @@ async function proxy(req: NextRequest, params: { path: string[] }) {
   })
 
   const data = await res.arrayBuffer()
-  return new NextResponse(data, {
+  // Responses with these statuses must have a null body (Fetch spec) — passing
+  // even an empty ArrayBuffer here throws inside NextResponse's constructor.
+  const noBody = res.status === 204 || res.status === 205 || res.status === 304
+  return new NextResponse(noBody ? null : data, {
     status: res.status,
     headers: { 'content-type': res.headers.get('content-type') || 'application/json' },
   })

@@ -12,6 +12,7 @@ export default function MoneyPage() {
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<MoneyEntry | null>(null)
   const [loading, setLoading] = useState(true)
+  const [deletingIds, setDeletingIds] = useState<Set<number>>(new Set())
 
   const load = async () => {
     try {
@@ -43,11 +44,22 @@ export default function MoneyPage() {
   }
 
   const handleDelete = async (id: number) => {
+    if (deletingIds.has(id)) return // already in flight, ignore repeat clicks
     if (!confirm('Hapus catatan ini?')) return
+    setDeletingIds(prev => new Set(prev).add(id))
     try {
       await moneyApi.delete(id)
-      load()
-    } catch (err) { alert((err as Error).message) }
+      setEntries(prev => prev.filter(en => en.id !== id))
+    } catch (err) {
+      alert((err as Error).message)
+      load() // resync in case of a real failure
+    } finally {
+      setDeletingIds(prev => {
+        const next = new Set(prev)
+        next.delete(id)
+        return next
+      })
+    }
   }
 
   const openAdd = () => { setShowForm(true); setEditing(null) }
@@ -78,7 +90,7 @@ export default function MoneyPage() {
 
       {loading
         ? <p className={styles.loading}>Memuat...</p>
-        : <MoneyList entries={entries} onEdit={openEdit} onDelete={handleDelete} />
+        : <MoneyList entries={entries} onEdit={openEdit} onDelete={handleDelete} deletingIds={deletingIds} />
       }
     </div>
   )
